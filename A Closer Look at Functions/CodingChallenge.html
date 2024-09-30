@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        .poll-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .poll-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Poll App</h1>
+        <p>Click the button below to answer the poll:</p>
+        <button class="poll-button poll">Answer poll</button>
+    </div>
+
+    <script>
+       // The poll object with a question, options, and an answers array
+const poll = {
+    question: "What is your favourite programming language?",
+    options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
+    answers: new Array(4).fill(0),
+
+    // Method to register a new answer
+    registerNewAnswer() {
+        // Display a prompt for the user to input the number of the selected option
+        const input = Number(
+            prompt(`${this.question}\n${this.options.join('\n')}\n(Write option number)`)
+        );
+
+        // Check if the input is a valid number and corresponds to one of the options
+        if (typeof input === 'number' && input >= 0 && input < this.answers.length) {
+            // Update the answers array
+            this.answers[input]++;
+        } else {
+            alert("Invalid input. Please enter a valid option number.");
+        }
+
+        // Display the results after registering the new answer
+        this.displayResults('string');
+        this.displayResults('array');
+    },
+
+            // Method to display the poll results
+            displayResults(type = 'array') {
+                if (type === 'string') {
+                    console.log(`Poll results are ${this.answers.join(', ')}`);
+                } else if (type === 'array') {
+                    console.log(this.answers);
+                }
+            }
+};
+
+        // Adding an event listener to the "Answer poll" button
+        document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+        // Bonus: Display test data using the displayResults method
+        poll.displayResults.call({ answers: [5, 2, 3] }, 'array');
+        poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+        poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'array');
+        poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
